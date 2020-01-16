@@ -31,9 +31,14 @@ def create_app(test_config=None):
     # simple entry point
     @app.route('/')
     def hello():
-        return "Hello World"
+        return "Take me to your leader"
 
+    # initialize app
     from . import db
     db.init_app(app)
+
+    # register authentication Blueprint
+    from . import auth
+    app.register_blueprint(auth.bp)
     
     return app
