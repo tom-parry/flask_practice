@@ -1,0 +1,18 @@
+<!-- tell Jinja that this template will replace blocks in base.html -->
+{% extends 'base.html' %}
+
+<!-- this makes header and title have the same value, but header is formatted differently -->
+{% block header %}
+    <h1>{% block title %}Log In{% endblock %}</h1>
+{% endblock %}
+
+<!-- create log in form -->
+{% block content %}
+    <form method="post">
+        <label for="username">Username:</label>
+        <input name="username" id="username" required>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+        <input type="submit" value="Log In!">
+    </form>
+{% endblock %}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<!-- will be overriden in other templates -->
+<title>{% block title%}{% endblock %} - Flaskr</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<nav>
+    <h1>Flaskrr</h1>
+    <ul>
+        <!-- g is automatically available in templates -->
+        <!-- if there is a user, show username and logout button -->
+        <!-- else, show links to register and login -->
+        {% if g.user %}
+            <li><span>{{ g.user['username'] }}</span></li>
+            <li><a href="{{url_for('auth.logout') }}">Log Out</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<section class="content">
+    <header>
+        <!-- will be overriden in other templates -->
+        {% block header %}{% endblock %}
+    </header>
+    <!-- this is where error messages stored in flash() are used -->
+    {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
+    <!-- will be overriden in other templates -->
+    {% block content %}{% endblock %}
+</section>

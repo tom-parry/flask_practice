@@ -1,6 +1,6 @@
 import os
 
-from flask import Flask
+from flask import Flask, redirect, url_for
 
 # application factory function
 def create_app(test_config=None):
@@ -31,7 +31,7 @@ def create_app(test_config=None):
     # simple entry point
     @app.route('/')
     def hello():
-        return "Take me to your leader"
+        return redirect(url_for('auth.login'))
 
     # initialize app
     from . import db
@@ -40,5 +40,11 @@ def create_app(test_config=None):
     # register authentication Blueprint
     from . import auth
     app.register_blueprint(auth.bp)
+
+    from . import blog
+    app.register_blueprint(blog.bp)
+    
+    # make sure url_for('index') and url_for('blog.index') will be equivalent
+    app.add_url_rule('/', endpoint='index')
     
     return app
